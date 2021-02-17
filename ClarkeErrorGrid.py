@@ -78,7 +78,7 @@ codina@REMOVETHIScactus.iico.uaslp.mx
 March 29 2013
 '''
 
-
+#%%
 
 import matplotlib.pyplot as plt
 
@@ -92,21 +92,26 @@ def clarke_error_grid(ref_values, pred_values, title_string):
 
     #Checks to see if the values are within the normal physiological range, otherwise it gives a warning
     if max(ref_values) > 400 or max(pred_values) > 400:
-        print "Input Warning: the maximum reference value {} or the maximum prediction value {} exceeds the normal physiological range of glucose (<400 mg/dl).".format(max(ref_values), max(pred_values))
+        print ("Input Warning: the maximum reference value {} or the maximum prediction value {} exceeds the normal physiological range of glucose (<400 mg/dl).".format(max(ref_values), max(pred_values)))
     if min(ref_values) < 0 or min(pred_values) < 0:
-        print "Input Warning: the minimum reference value {} or the minimum prediction value {} is less than 0 mg/dl.".format(min(ref_values),  min(pred_values))
+        print ("Input Warning: the minimum reference value {} or the minimum prediction value {} is less than 0 mg/dl.".format(min(ref_values),  min(pred_values)))
 
     #Clear plot
     plt.clf()
 
     #Set up plot
-    plt.scatter(ref_values, pred_values, marker='o', color='black', s=8)
+    plt.scatter(ref_values_ac, pred_values_ac, marker='o', s=16, label='Accu-chek Aviva')
+    plt.scatter(ref_values_o, pred_values_o, marker='o', s=16, label='One touch')
+    plt.scatter(ref_values_st, pred_values_st, marker='o', s=16, label='iBG-star')
+    plt.scatter(ref_values_tr, pred_values_tr, marker='o', s=16, label='Truemetrix')
+    plt.scatter(ref_values_w, pred_values_w, marker='o', s=16, label='eBwell')
     plt.title(title_string + " Clarke Error Grid")
     plt.xlabel("Reference Concentration (mg/dl)")
     plt.ylabel("Prediction Concentration (mg/dl)")
     plt.xticks([0, 50, 100, 150, 200, 250, 300, 350, 400])
     plt.yticks([0, 50, 100, 150, 200, 250, 300, 350, 400])
     plt.gca().set_facecolor('white')
+    plt.legend()
 
     #Set axes lengths
     plt.gca().set_xlim([0, 400])
@@ -159,3 +164,138 @@ def clarke_error_grid(ref_values, pred_values, title_string):
             zone[1] += 1    #Zone B
 
     return plt, zone
+
+
+# accuchek
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\accuchek_50.txt'
+my_file = open(path, "r") 
+content5 = my_file.read().splitlines() 
+content5 = [float(i) for i in content5]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\accuchek_70.txt'
+my_file = open(path, "r") 
+content7 = my_file.read().splitlines() 
+content7 = [float(i) for i in content7]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\accuchek_90.txt'
+my_file = open(path, "r") 
+content9 = my_file.read().splitlines() 
+content9 = [float(i) for i in content9]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\accuchek_120.txt'
+my_file = open(path, "r") 
+content12 = my_file.read().splitlines() 
+content12 = [float(i) for i in content12]
+my_file.close()
+
+ref_values_ac = [50]*len(content5) + [70]*len(content7) + [90]*len(content9) + [120]*len(content12)
+pred_values_ac = content5 + content7 + content9 + content12
+pred_values_ac = [x * 18.018 for x in pred_values_ac] 
+
+# truemetrix
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\true_50.txt'
+my_file = open(path, "r") 
+content5 = my_file.read().splitlines() 
+content5 = [float(i) for i in content5]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\true_70.txt'
+my_file = open(path, "r") 
+content7tr = my_file.read().splitlines() 
+content7 = [float(i) for i in content7]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\true_90.txt'
+my_file = open(path, "r") 
+content9 = my_file.read().splitlines() 
+content9 = [float(i) for i in content9]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\true_120.txt'
+my_file = open(path, "r") 
+content12 = my_file.read().splitlines() 
+content12 = [float(i) for i in content12]
+my_file.close()
+
+ref_values_tr = [50]*len(content5) + [70]*len(content7) + [90]*len(content9) + [120]*len(content12)
+pred_values_tr = content5 + content7 + content9 + content12
+pred_values_tr = [x * 18.018 for x in pred_values_tr] 
+
+# eBwell
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\well_50.txt'
+my_file = open(path, "r") 
+content5 = my_file.read().splitlines() 
+content5 = [float(i) for i in content5]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\well_70.txt'
+my_file = open(path, "r") 
+content7tr = my_file.read().splitlines() 
+content7 = [float(i) for i in content7]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\well_90.txt'
+my_file = open(path, "r") 
+content9 = my_file.read().splitlines() 
+content9 = [float(i) for i in content9]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\well_120.txt'
+my_file = open(path, "r") 
+content12 = my_file.read().splitlines() 
+content12 = [float(i) for i in content12]
+my_file.close()
+
+ref_values_w = [50]*len(content5) + [70]*len(content7) + [90]*len(content9) + [120]*len(content12)
+pred_values_w = content5 + content7 + content9 + content12
+
+# one touch
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\one_50.txt'
+my_file = open(path, "r") 
+content5 = my_file.read().splitlines() 
+content5 = [float(i) for i in content5]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\one_70.txt'
+my_file = open(path, "r") 
+content7tr = my_file.read().splitlines() 
+content7 = [float(i) for i in content7]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\one_90.txt'
+my_file = open(path, "r") 
+content9 = my_file.read().splitlines() 
+content9 = [float(i) for i in content9]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\one_120.txt'
+my_file = open(path, "r") 
+content12 = my_file.read().splitlines() 
+content12 = [float(i) for i in content12]
+my_file.close()
+
+ref_values_o = [50]*len(content5) + [70]*len(content7) + [90]*len(content9) + [120]*len(content12)
+pred_values_o = content5 + content7 + content9 + content12
+pred_values_o = [x * 18.018 for x in pred_values_o] 
+
+# iBGstar
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\st_50.txt'
+my_file = open(path, "r") 
+content5 = my_file.read().splitlines() 
+content5 = [float(i) for i in content5]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\st_70.txt'
+my_file = open(path, "r") 
+content7tr = my_file.read().splitlines() 
+content7 = [float(i) for i in content7]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\st_90.txt'
+my_file = open(path, "r") 
+content9 = my_file.read().splitlines() 
+content9 = [float(i) for i in content9]
+my_file.close()
+path = r'C:\Users\nidad\Documents\Ukai\Unis\IIB\IIB Modules\4I14 Biosensors and bioelectronics\Coursework 1\error grid\ClarkeErrorGrid\st_120.txt'
+my_file = open(path, "r") 
+content12 = my_file.read().splitlines() 
+content12 = [float(i) for i in content12]
+my_file.close()
+
+ref_values_st = [50]*len(content5) + [70]*len(content7) + [90]*len(content9) + [120]*len(content12)
+pred_values_st = content5 + content7 + content9 + content12
+pred_values_st = [x * 18.018 for x in pred_values_st] 
+
+plot, zone = clarke_error_grid(ref_values_ac, pred_values_ac, '') 
+#plot.show()
+plot.savefig("plot", format='png')
+# %%
